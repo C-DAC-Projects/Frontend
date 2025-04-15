@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
-import { Link } from 'react-router-dom'
+import {addUser} from '../Services/user'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+
 
 function SignUp() {
 
@@ -10,7 +12,10 @@ function SignUp() {
         password : '',
     })
 
-    const signup = ()=>{
+    // get the navigation function reference
+  const navigate = useNavigate()
+
+    const signup = async()=>{
 
         if(userInfo.name.length === 0)
         {
@@ -24,15 +29,33 @@ function SignUp() {
     }
     else{
 
-        //API call
-        // const result = 
+        // console.log("Sign up API") 
+        // make an API call
+      const { name, email, password } = userInfo
+      const result = await addUser(
+        name,
+        email,
+        password,
+      )
+
+      console.log("result : ", result)
+      // check the result
+      if (result['status'] == 'success') {
+        toast.success('Successfully registered new user')
+
+        // redirect to Login screen
+        navigate('/')
+      } else {
+        toast.error(result['error'])
+      }
     }
 }
+
 
     return (
         <div className='col'>
             <h1 style={{textAlign:"center"}}>Sign Up</h1>
-                <div style={{backgroundColor:"pink", display:"flex", flexDirection:'column', marginLeft:"20%", marginRight:"20%", paddingBottom:"20px", borderRadius:"10px"}}>
+                <div style={{backgroundColor:"pink", display:"flex", flexDirection:'column', marginLeft:"30%", marginRight:"30%", paddingBottom:"20px", borderRadius:"10px"}}>
                     <div className="container mt-3">
                         <div style={{display:"flex", flexDirection:"column"}}>
                             <label style={{ marginBottom:"5px"}}>Name</label>

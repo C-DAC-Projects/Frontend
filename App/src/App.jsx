@@ -3,6 +3,8 @@ import { ToastContainer } from 'react-toastify'
 import SignIn from './Pages/SignIn';
 import SignUp from './Pages/SignUp';
 import Home from './Pages/Home';
+import AddBlog from './Pages/AddBlog';
+
 
 function App() {
   return (
@@ -19,6 +21,10 @@ function App() {
         <Route
           path='home'
           element={<Home />}
+        />
+        <Route
+          path='addblog'
+          element={<AddBlog />}
         />
        
       </Routes>
